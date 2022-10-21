@@ -43,9 +43,7 @@ describe("scooter methods", () => {
   test("Check rent method works with correct values", () => {
     anotherScooter.isBroken = false;
     anotherScooter.charged = 50;
-    // jest.spyOn(console.log());
     anotherScooter.rent();
-    //expect(jest.spyOn(console.log())).toHaveBeenCalledWith("Enjoy the ride!");
     expect(anotherScooter.docked).toBe(false);
   });
 
@@ -86,7 +84,4 @@ describe("scooter methods", () => {
   });
 });
 
-//   //dock method
-//   //requestRepair method
-//   //charge method
 // });

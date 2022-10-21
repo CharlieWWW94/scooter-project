@@ -38,8 +38,8 @@ class ScooterApp {
     }
   }
 
-  addScooter(location, scooter) {
-    scooter.location = location;
+  addScooter(scooter, location) {
+    scooter.station = location;
     this.stations[location].push(scooter);
   }
 
@@ -47,13 +47,13 @@ class ScooterApp {
     let removalIndex = Number;
     let focalStation = scooterToRemove.station;
 
-    for (let i = 0; i < focalStation.length; i++) {
+    for (let i = 0; i < this.stations[focalStation].length; i++) {
       if (focalStation[i].serial === scooterToRemove.serial) {
         removalIndex = i;
       }
     }
 
-    focalStation.splice(removalIndex, 1);
+    this.stations[focalStation].splice(removalIndex, 1);
   }
 }
 module.exports = ScooterApp;

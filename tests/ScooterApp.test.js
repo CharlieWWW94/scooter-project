@@ -44,7 +44,15 @@ describe("Testing ScooterApp methods", () => {
   test("Can add scooter", () => {
     const aminah = new User("Aminah", "7590", 24);
     const testScoot = new Scooter(aminah, "manhattan");
-    anotherApp.addScooter(testScoot);
+    anotherApp.addScooter(testScoot, "manhattan");
+  });
+
+  test("Can remove scooter", () => {
+    const aminah = new User("Aminah", "7590", 24);
+    const testScoot = new Scooter(aminah, "manhattan");
+    anotherApp.addScooter(testScoot, "manhattan");
+    anotherApp.removeScooter(testScoot);
+    expect(anotherApp.stations.manhattan.length).toBe(0);
   });
 });
 // register user
