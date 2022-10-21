@@ -38,6 +38,16 @@ class Scooter {
     });
     this.charged = 100;
   }
+
+  async requestRepair() {
+    await new Promise((res) => {
+      setTimeout(() => {
+        res("resolved");
+      }, 1000);
+    });
+
+    this.isBroken = false;
+  }
 }
 
 module.exports = Scooter;

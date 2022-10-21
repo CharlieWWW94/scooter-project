@@ -2,6 +2,8 @@ const User = require("./User");
 const Scooter = require("./Scooter");
 
 class ScooterApp {
+  static scooterSessions = [];
+
   constructor() {
     this.stations = {
       manhattan: [],
@@ -11,6 +13,7 @@ class ScooterApp {
       statenIsland: [],
     };
     this.registeredUsers = {};
+    ScooterApp.scooterSessions.push(this);
   }
 
   register(user) {
