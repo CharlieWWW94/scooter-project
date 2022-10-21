@@ -4,7 +4,8 @@ const User = require("../src/User");
 //typeof scooter === object
 describe("scooter object", () => {
   beforeEach(() => {
-    newScooter = new Scooter();
+    newUser = new User();
+    newScooter = new Scooter(newUser, "Bermondsey");
   });
 
   test("scooter instantiates as expected", () => {
@@ -12,15 +13,15 @@ describe("scooter object", () => {
   });
 
   test("new scooter has station", () => {
-    expect(newScooter.station).toBeInstanceOf(String);
+    expect(typeof newScooter.station).toBe("string");
   });
 
   test("new scooter has serial", () => {
-    expect(newScooter.serial).toBeInstanceOf(Number);
+    expect(typeof newScooter.serial).toBe("number");
   });
 
   test("new scooter is charged", () => {
-    expect(newScooter.charged).toBeInstanceOf(Number);
+    expect(typeof newScooter.charged).toBe("number");
   });
 
   test("new scooter is not broken", () => {
@@ -35,34 +36,31 @@ describe("scooter object", () => {
 //Method tests
 describe("scooter methods", () => {
   beforeEach(() => {
-    anotherScooter = new Scooter();
-  });
-
-  afterEach(() => {
-    anotherScooter = new Scooter();
+    anotherUser = new User();
+    anotherScooter = new Scooter(anotherUser, "manhattan");
   });
 
   test("Check rent method works with correct values", () => {
     anotherScooter.isBroken = false;
-    anotherScooter.charge = 50;
-    jest.spyOn(console.log());
+    anotherScooter.charged = 50;
+    // jest.spyOn(console.log());
     anotherScooter.rent();
-    expect(console.log).toHaveBeenCalledWith("Enjoy the ride!");
+    //expect(jest.spyOn(console.log())).toHaveBeenCalledWith("Enjoy the ride!");
     expect(anotherScooter.docked).toBe(false);
   });
 
   test("check rent method works appropriately when scooter broken", () => {
     anotherScooter.isBroken = true;
-    expect(anotherScooter.rent()).toThrow(
-      "Scooter is broken, please send a repair request"
-    );
+    expect(() => {
+      anotherScooter.rent();
+    }).toThrow("Scooter is broken, please send a repair request.");
   });
 
   test("check rent method works appropriately when scooter is not charged", () => {
     anotherScooter.charged = 19;
-    expect(anotherScooter.rent()).toThrow(
-      "Scooter low on battery, please charge."
-    );
+    expect(() => {
+      anotherScooter.rent();
+    }).toThrow("Scooter low on battery, please charge.");
   });
 
   test("Check scooter can recharge", async () => {
@@ -72,13 +70,19 @@ describe("scooter methods", () => {
   });
 
   test("Check dock function sets scooter location when provided", () => {
+    anotherScooter.dock("manhattan");
+    expect(anotherScooter.location).toBe("manhattan");
+  });
+
+  test("Check dock function sets user to empty", () => {
     anotherScooter.dock("Haddock");
-    expect(anotherScooter.location).toBe("Haddock");
+    expect(anotherScooter.user).toBe("");
   });
 
   test("Check dock function throws error when no location given", () => {
-    anotherScooter.dock();
-    expect(anotherScooter.location).toThrow("Docking station required!");
+    expect(() => {
+      anotherScooter.dock();
+    }).toThrow("Docking station required!");
   });
 });
 
